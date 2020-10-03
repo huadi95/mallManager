@@ -19,16 +19,14 @@
     <el-container>
       <!-- 内容左边导航栏 -->
       <el-aside width="200px" class="aside">
-        <el-menu unique-opened>
+        <el-menu unique-opened router>
           <!-- 1.用户管理 -->
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-              <el-menu-item
-                ><i class="el-icon-menu"></i><span>用户列表</span></el-menu-item
-              >
+            <el-menu-item index="user"><i class="el-icon-menu"></i><span>用户列表</span></el-menu-item>
           </el-submenu>
           <!-- 2.权限管理 -->
           <el-submenu index="2">
@@ -82,7 +80,9 @@
         </el-menu>
       </el-aside>
       <!-- 内容右边数据 -->
-      <el-main class="mian">Main</el-main>
+      <el-main class="mian">
+        <router-view />
+      </el-main>
     </el-container>
   </el-container>
 </template>
