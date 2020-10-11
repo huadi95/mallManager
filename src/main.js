@@ -4,6 +4,8 @@ import "element-ui/lib/theme-chalk/index.css";
 import moment from "moment";
 import "@/assets/css/base.css";
 import MyHttpServer from "@/plugins/http.js";
+//引入面包屑公共组件
+import MyBread from '@/common/MyBread/MyBread.vue'
 import App from "./App";
 import router from "./router";
 
@@ -19,6 +21,8 @@ Vue.filter("fmtdate", v => {
     return moment(v).format("YYYY-MM-DD");
 });
 
+//自定义公共组件
+Vue.component(MyBread.name, MyBread)
 new Vue({
     el: "#app",
     router,

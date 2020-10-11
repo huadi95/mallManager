@@ -1,11 +1,7 @@
 <template>
   <el-card class="box-card">
     <!-- 1.面包屑 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <my-bread level1="用户管理" level2="用户列表"></my-bread>
     <!-- 2.搜索 -->
     <el-row class="search-row">
       <el-col>
@@ -23,7 +19,7 @@
     </el-row>
     <!-- 3.表单 -->
     <template>
-      <el-table :data="userList" stripe style="width: 100%">
+      <el-table :data="userList" stripe style="width: 100%" height="350px">
         <el-table-column type="index" label="#" width="60"></el-table-column>
         <el-table-column prop="username" label="姓名" width="80"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
@@ -41,7 +37,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="操作">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-row>
               <el-button
@@ -189,10 +185,6 @@ export default {
   methods: {
     //请求用户数据
     async getUserInfo() {
-      //1.获取token值
-      const token = localStorage.getItem("token");
-      //2.获取用户数据是需要授权的 API ，必须在请求头中使用 Authorization 字段提供 token 令牌
-      this.$http.defaults.headers.common["Authorization"] = token;
       //3.请求数据
       // query	查询参数	可以为空
       // pagenum	当前页码	不能为空
@@ -212,8 +204,6 @@ export default {
         this.userList = users;
         //2.获取总条数
         this.total = total;
-        //3.提示获取数据成功
-        this.$message.success(msg);
       } else {
         //请求失败
         //1.提示获取数据失败
@@ -404,7 +394,7 @@ export default {
 </script>
 <style scoped>
 .box-card {
-  height: 100%;
+  height: 99%;
 }
 .search-row {
   margin-top: 20px;
