@@ -128,7 +128,7 @@
         <el-form-item label="用户名" label-width="100px">{{currentRolesName}}</el-form-item>
         <el-form-item label="角色" label-width="100px">
           <el-select v-model="currRoleId">
-            <el-option label="请选择" :value="-1"></el-option>
+            <el-option label="请选择" disabled :value="-1"></el-option>
             <el-option
               v-for="(item,index) in currentRolesList"
               :key="index"
