@@ -3,20 +3,9 @@
     <!-- 1.面包屑 -->
     <my-bread level1="商品管理" level2="商品列表"></my-bread>
     <!-- 2.提示信息el-alert -->
-    <el-alert
-      title="添加商品信息"
-      center
-      type="success"
-      show-icon
-      style="margin-top:20px;"
-    ></el-alert>
+    <el-alert title="添加商品信息" center type="success" show-icon style="margin-top:20px;"></el-alert>
     <!-- 3.操作步骤的步骤条 -->
-    <el-steps
-      :active="1 * active"
-      finish-status="success"
-      simple
-      style="margin-top: 20px"
-    >
+    <el-steps :active="1 * active" finish-status="success" simple style="margin-top: 20px">
       <el-step title="基本信息"></el-step>
       <el-step title="商品参数"></el-step>
       <el-step title="商品属性"></el-step>
@@ -48,6 +37,7 @@
             <!-- 级联选择器 -->
             <el-cascader
               expand-trigger="hover"
+              clearable
               v-model="selectedOptions"
               :options="options"
               :props="defaultProp"
@@ -57,29 +47,16 @@
         </el-tab-pane>
         <el-tab-pane name="2" label="商品参数">
           <!-- 显示的是该商品三级分类的动态参数 -->
-          <el-form-item
-            :label="item.attr_name"
-            v-for="(item, i) in arrPyparams"
-            :key="i"
-          >
+          <el-form-item :label="item.attr_name" v-for="(item, i) in arrPyparams" :key="i">
             <!-- 复选框 -->
             <el-checkbox-group v-model="item.attr_vals">
-              <el-checkbox
-                border
-                :label="item1"
-                v-for="(item1, i) in item.attr_vals"
-                :key="i"
-              ></el-checkbox>
+              <el-checkbox border :label="item1" v-for="(item1, i) in item.attr_vals" :key="i"></el-checkbox>
             </el-checkbox-group>
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane name="3" label="商品属性">
           <!-- 显示的是该商品三级分类的静态参数 -->
-          <el-form-item
-            :label="item.attr_name"
-            v-for="(item, i) in arrStaticparams"
-            :key="i"
-          >
+          <el-form-item :label="item.attr_name" v-for="(item, i) in arrStaticparams" :key="i">
             <el-input v-model="item.attr_vals"></el-input>
           </el-form-item>
         </el-tab-pane>
@@ -95,22 +72,15 @@
               list-type="picture"
             >
               <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">
-                只能上传jpg/png文件，且不超过500kb
-              </div>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane name="5" label="商品内容">
           <!-- 富文本 -->
           <el-form-item style="text-align: center">
-            <quill-editor
-              v-model="form.goods_introduce"
-              style="margin:15px;"
-            ></quill-editor>
-            <el-button type="primary" @click="getGoodsAdd()"
-              >点我-添加商品</el-button
-            >
+            <quill-editor v-model="form.goods_introduce" style="margin:15px;"></quill-editor>
+            <el-button type="primary" @click="getGoodsAdd()">点我-添加商品</el-button>
           </el-form-item>
         </el-tab-pane>
       </el-tabs>

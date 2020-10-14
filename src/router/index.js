@@ -10,6 +10,8 @@ import Right from '@/components/home/children/right/right.vue'
 import Role from '@/components/home/children/right/role.vue'
 import Goods from '@/components/home/children/goods/goodsList.vue'
 import GoodsAdd from '@/components/home/children/goods/goodsAdd.vue'
+import GoodsParams from '@/components/home/children/goods/goodsParams.vue'
+import GoodsCate from '@/components/home/children/goods/goodsCate.vue'
 
 Vue.use(Router)
 
@@ -42,6 +44,14 @@ const router = new Router({
             name: 'add',
             path: '/add',
             component: GoodsAdd
+        }, {
+            name: 'params',
+            path: '/params',
+            component: GoodsParams
+        }, {
+            name: 'categories',
+            path: '/categories',
+            component: GoodsCate
         }]
     }]
 })
