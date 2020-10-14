@@ -90,7 +90,7 @@
 </template>
 
 <script>
-var ElTreeGrid = require("element-tree-grid");
+import ElTreeGrid from "element-tree-grid";
 export default {
   name: "GoodsCate",
   components: {
