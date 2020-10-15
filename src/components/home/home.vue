@@ -67,6 +67,7 @@ export default {
   created() {
     //1.在创建完成时获取导航栏数据
     this.getNavBar();
+    console.log(this.$route.path);
   },
   methods: {
     //退出事件

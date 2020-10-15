@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="box-card">
     <!-- 1.面包屑 -->
     <my-bread level1="角色管理" level2="角色列表"></my-bread>
     <!-- 2.添加角色按钮 -->
@@ -13,40 +13,52 @@
       <el-table :data="roleList" stripe style="width: 100%" height="400">
         <el-table-column type="expand" width="150">
           <template slot-scope="scope">
-            <el-row v-for="(item,i) in scope.row.children" :key="i">
+            <el-row v-for="(item, i) in scope.row.children" :key="i">
               <el-col :span="4">
-                <el-tag @close="delRight(scope.row,item.id)" closable>{{item.authName}}</el-tag>
+                <el-tag @close="delRight(scope.row, item.id)" closable>{{
+                  item.authName
+                }}</el-tag>
                 <i class="el-icon-arrow-right"></i>
               </el-col>
               <el-col :span="20">
-                <el-row v-for="(item1,i) in item.children" :key="i">
+                <el-row v-for="(item1, i) in item.children" :key="i">
                   <el-col :span="4">
                     <el-tag
-                      @close="delRight(scope.row,item1.id)"
+                      @close="delRight(scope.row, item1.id)"
                       closable
                       type="success"
-                    >{{item1.authName}}</el-tag>
+                      >{{ item1.authName }}</el-tag
+                    >
                     <i class="el-icon-arrow-right"></i>
                   </el-col>
                   <el-col :span="20">
                     <el-tag
-                      @close="delRight(scope.row,item2.id)"
+                      @close="delRight(scope.row, item2.id)"
                       closable
                       type="warning"
-                      v-for="(item2,i) in item1.children"
+                      v-for="(item2, i) in item1.children"
                       :key="i"
-                    >{{item2.authName}}</el-tag>
+                      >{{ item2.authName }}</el-tag
+                    >
                   </el-col>
                 </el-row>
               </el-col>
             </el-row>
             <!-- 当角色没有权限时显示,即scope.row.children.length为0时 -->
-            <span v-if="scope.row.children.length===0">未分配权限</span>
+            <span v-if="scope.row.children.length === 0">未分配权限</span>
           </template>
         </el-table-column>
         <el-table-column type="index" label="#" width="150"></el-table-column>
-        <el-table-column prop="roleName" label="角色名称" width="200"></el-table-column>
-        <el-table-column prop="roleDesc" label="角色描述" width="200"></el-table-column>
+        <el-table-column
+          prop="roleName"
+          label="角色名称"
+          width="200"
+        ></el-table-column>
+        <el-table-column
+          prop="roleDesc"
+          label="角色描述"
+          width="200"
+        ></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-row>
@@ -161,9 +173,9 @@ export default {
       //获取当前角色的数据
       form: [],
       //控制添加角色的对话框显示或隐藏
-      dialogFormVisibleAdd:false,
+      dialogFormVisibleAdd: false,
       //添加角色的数据
-      roleInfo:[]
+      roleInfo: []
     };
   },
   created() {
@@ -304,51 +316,57 @@ export default {
     //编辑角色事件
     async editRoleInfo() {
       //1.先判断角色名称是否为空
-      if(this.form.roleName){
+      if (this.form.roleName) {
         //角色名称不为空
         //1.发起请求，编辑用户角色
         //roleName	角色名称	不能为空
         //roleDesc	角色描述	可以为空
-        const res = await this.$http.put(`roles/${this.form.id}`,{roleName:this.form.roleName,roleDesc:this.form.roleDesc});
+        const res = await this.$http.put(`roles/${this.form.id}`, {
+          roleName: this.form.roleName,
+          roleDesc: this.form.roleDesc
+        });
         //2.弹出提示信息
-        this.$message.success("编辑成功")
-      }else{
+        this.$message.success("编辑成功");
+      } else {
         //角色名称为空
         //1.弹出提示信息
         this.$message.warning("角色名称不能为空，编辑失败");
-        this.getRoleList()
+        this.getRoleList();
       }
       //2.关闭对话框
       this.dialogFormVisibleEdit = false;
     },
     //显示添加用户的对话框事件
-    showAddRoleDia(){
+    showAddRoleDia() {
       //1.每次点击添加用户按钮前先进行清空
       this.roleInfo = {};
       //2.显示添加用户的对话框
       this.dialogFormVisibleAdd = true;
     },
     //添加角色事件
-    async addRoleInfo(){
-       //1.先判断角色名称是否为空
-       if(this.roleInfo.roleName){
-         //角色名称不为空
+    async addRoleInfo() {
+      //1.先判断角色名称是否为空
+      if (this.roleInfo.roleName) {
+        //角色名称不为空
         //1.发起请求，编辑用户角色
         //roleName	角色名称	不能为空
         //roleDesc	角色描述	可以为空
-        const res = await this.$http.post(`roles`,{roleName:this.roleInfo.roleName,roleDesc:this.roleInfo.roleDesc});
+        const res = await this.$http.post(`roles`, {
+          roleName: this.roleInfo.roleName,
+          roleDesc: this.roleInfo.roleDesc
+        });
         //2.提示成信息
-        this.$message.success(res.data.meta.msg)
+        this.$message.success(res.data.meta.msg);
         //3.更新视图
-        this.getRoleList()
-       }else{
-         //角色名称为空
+        this.getRoleList();
+      } else {
+        //角色名称为空
         //1.弹出提示信息
         this.$message.warning("角色名称不能为空，编辑失败");
-        this.getRoleList()
-       }
-       //2.关闭对话框
-       this.dialogFormVisibleAdd = false;
+        this.getRoleList();
+      }
+      //2.关闭对话框
+      this.dialogFormVisibleAdd = false;
     }
   }
 };

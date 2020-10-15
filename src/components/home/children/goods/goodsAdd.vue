@@ -244,4 +244,8 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.box-card{
+  height: 99%;
+  overflow: hidden;
+}</style>

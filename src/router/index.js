@@ -4,16 +4,56 @@ import {
     Message
 } from "element-ui";
 
-//页面路由组件
-import Login from "@/components/login/login.vue";
-import Home from "@/components/home/home.vue";
-import User from "@/components/home/children/user/user.vue";
-import Right from "@/components/home/children/right/right.vue";
-import Role from "@/components/home/children/right/role.vue";
-import Goods from "@/components/home/children/goods/goodsList.vue";
-import GoodsAdd from "@/components/home/children/goods/goodsAdd.vue";
-import GoodsParams from "@/components/home/children/goods/goodsParams.vue";
-import GoodsCate from "@/components/home/children/goods/goodsCate.vue";
+//页面路由
+/* import Login from '@/components/login/login.vue'
+import Home from '@/components/home/home.vue'
+import User from '@/components/home/children/user/user.vue'
+import Right from '@/components/home/children/right/right.vue'
+import Role from '@/components/home/children/right/role.vue'
+import Goods from '@/components/home/children/goods/goodsList.vue'
+import GoodsAdd from '@/components/home/children/goods/goodsAdd.vue'
+import GoodsParams from '@/components/home/children/goods/goodsParams.vue'
+import GoodsCate from '@/components/home/children/goods/goodsCate.vue'
+import Orders from '@/components/home/children/order/orders.vue'
+import Reports from '@/components/home/children/reports/reports.vue' */
+
+//页面路由懒加载
+//登录页
+const Login = () =>
+    import ('@/components/login/login.vue');
+
+//首页
+const Home = () =>
+    import ('@/components/home/home.vue');
+
+//用户管理页
+const User = () =>
+    import ('@/components/home/children/user/user.vue');
+
+//权限管理页
+const Right = () =>
+    import ('@/components/home/children/right/right.vue');
+const Role = () =>
+    import ('@/components/home/children/right/role.vue');
+
+//商品管理页
+const Goods = () =>
+    import ('@/components/home/children/goods/goodsList.vue');
+const GoodsAdd = () =>
+    import ('@/components/home/children/goods/goodsAdd.vue');
+const GoodsParams = () =>
+    import ('@/components/home/children/goods/goodsParams.vue');
+const GoodsCate = () =>
+    import ('@/components/home/children/goods/goodsCate.vue');
+
+//订单管理页
+const Orders = () =>
+    import ('@/components/home/children/order/orders.vue');
+
+//数据统计页
+const Reports = () =>
+    import ('@/components/home/children/reports/reports.vue');
+
 
 Vue.use(Router);
 
@@ -65,6 +105,14 @@ const router = new Router({
                     name: "categories",
                     path: "/categories",
                     component: GoodsCate
+                }, {
+                    name: "orders",
+                    path: "/orders",
+                    component: Orders
+                }, {
+                    name: "reports",
+                    path: "/reports",
+                    component: Reports
                 }
             ]
         }
