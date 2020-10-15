@@ -19,12 +19,15 @@ Vue.use(Router)
 
 const router = new Router({
     routes: [{
+        path: '/',
+        redirect: '/login'
+    }, {
         name: 'login',
         path: '/login',
         component: Login
     }, {
         name: 'home',
-        path: '/',
+        path: '/home',
         component: Home,
         children: [{
             name: 'users',

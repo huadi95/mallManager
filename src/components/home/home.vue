@@ -35,6 +35,7 @@
       </el-aside>
       <!-- 内容右边数据 -->
       <el-main class="mian">
+        <el-card class="box-card"></el-card>
         <router-view />
       </el-main>
     </el-container>
@@ -52,6 +53,7 @@ export default {
   created() {
     //1.在创建完成时获取导航栏数据
     this.getNavBar();
+    console.log(this.$route.path);
   },
   methods: {
     //退出事件

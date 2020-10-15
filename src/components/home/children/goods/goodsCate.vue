@@ -39,7 +39,7 @@
               plain
               type="primary"
               icon="el-icon-edit"
-              @click="showEditRightDia(scope.row)"
+              @click="showEditCateDia(scope.row)"
               circle
             ></el-button>
             <el-button
@@ -47,7 +47,7 @@
               plain
               type="danger"
               icon="el-icon-delete"
-              @click="showDelRight(scope.row.id)"
+              @click="showDelCate(scope.row.cat_id)"
               circle
             ></el-button>
           </el-row>
@@ -65,6 +65,7 @@
       :total="total"
     ></el-pagination>
     <!-- 对话框 -->
+    <!-- 1.添加分类对话框 -->
     <el-dialog title="添加分类" :visible.sync="dialogFormVisibleAdd">
       <el-form :model="form">
         <el-form-item label="分类名称" label-width="100px">
@@ -86,6 +87,29 @@
         <el-button type="primary" @click="addCateInfo()">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 2.编辑分类动态参数的对话框 -->
+    <el-dialog title="编辑分类" :visible.sync="dialogFormVisibleEdit">
+      <el-form :model="cateInfo">
+        <el-form-item label="分类名称" label-width="100px">
+          <el-input v-model="cateInfo.cat_name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="级别" label-width="100px">
+          <span v-if="cateInfo.cat_level === 0">一级</span>
+          <span v-if="cateInfo.cat_level === 1">二级</span>
+          <span v-if="cateInfo.cat_level === 2">三级</span>
+        </el-form-item>
+        <el-form-item label="是否有效" label-width="100px">
+          <el-radio-group v-model="cateInfo.cat_deleted">
+            <el-radio :label="false">是</el-radio>
+            <el-radio :label="true">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleEdit = false">取 消</el-button>
+        <el-button type="primary" @click="editCateInfo()">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -100,9 +124,11 @@ export default {
     return {
       //显示隐藏添加分类的对话框
       dialogFormVisibleAdd: false,
-      //对话框数据
-      cateInfo: [],
-      //对话框的数据
+      //显示隐藏编辑分类的对话框
+      dialogFormVisibleEdit: false,
+      //编辑分类对话框数据
+      cateInfo: {},
+      //添加分类对话框的数据
       form: {
         cat_pid: 0,
         cat_name: "",
@@ -183,10 +209,78 @@ export default {
       }
       //2.发起请求，提交添加的数据
       const res = await this.$http.post("categories", this.form);
-      //3.更新视图
-      this.getGoodsCate();
-      //4.关闭对话框
+      //3.获取需要的数据
+      const { msg, status } = res.data.meta;
+      //4.判断是否请求成功
+      if (status === 201) {
+        //更新视图
+        this.getGoodsCate();
+        //提示信息
+        this.$message.success(msg);
+      } else {
+        //提示信息
+        this.$message.warning(msg);
+      }
+      //5.关闭对话框
       this.dialogFormVisibleAdd = false;
+    },
+    //点击编辑按钮触发-显示分类编辑对话框
+    showEditCateDia(cate) {
+      //1.当前点击要编辑的数据
+      this.cateInfo = cate;
+      //2.打开对话框
+      this.dialogFormVisibleEdit = true;
+    },
+    //点击分类编辑对话框中的确定按钮触发
+    async editCateInfo() {
+      //1.发起请求，修改数据
+      const res = await this.$http.put(
+        `categories/${this.cateInfo.cat_id}`,
+        this.cateInfo
+      );
+      //2.获取需要的数据
+      const { msg, status } = res.data.meta;
+      //3.判断是否请求成功
+      if (status === 200) {
+        this.$message.success(msg);
+      } else {
+        this.$message.warning(msg);
+      }
+      //4.关闭对话框
+      this.dialogFormVisibleEdit = false;
+    },
+    //操作中的删除按钮事件
+    showDelCate(cateId) {
+      this.$confirm("此操作将永久删除该分类, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+          //1.发送请求删除数据
+          const res = await this.$http.delete(`categories/${cateId}`);
+          //2.获取需要的数据
+          const {
+            meta: { msg, status }
+          } = res.data;
+          if (status === 200) {
+            //删除成功
+            //1.让页面回到第一页
+            this.pagenum = 1;
+            //2.更新视图
+            this.getGoodsCate();
+            //3.提示删除成功信息
+            this.$message({
+              type: "success",
+              message: msg
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   }
 };
