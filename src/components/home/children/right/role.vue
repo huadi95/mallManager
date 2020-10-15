@@ -11,7 +11,7 @@
     <!-- 3.表单 -->
     <template>
       <el-table :data="roleList" stripe style="width: 100%" height="400">
-        <el-table-column type="expand" width="150">
+        <el-table-column type="expand" width="60">
           <template slot-scope="scope">
             <el-row v-for="(item, i) in scope.row.children" :key="i">
               <el-col :span="4">
@@ -48,16 +48,14 @@
             <span v-if="scope.row.children.length === 0">未分配权限</span>
           </template>
         </el-table-column>
-        <el-table-column type="index" label="#" width="150"></el-table-column>
+        <el-table-column type="index" label="#" width="100"></el-table-column>
         <el-table-column
           prop="roleName"
           label="角色名称"
-          width="200"
         ></el-table-column>
         <el-table-column
           prop="roleDesc"
           label="角色描述"
-          width="200"
         ></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">

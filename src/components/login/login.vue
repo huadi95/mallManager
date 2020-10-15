@@ -26,25 +26,30 @@ export default {
   data() {
     return {
       formdata: {
-        username: 'admin',
-        password: '123456'
+        username: "admin",
+        password: "123456"
       }
     };
   },
   methods: {
     async handleLogin() {
       //1.获取登录的信息
-      const {data:{data,meta:{msg,status}}} =await this.$http.post("login", this.formdata);
+      const {
+        data: {
+          data,
+          meta: { msg, status }
+        }
+      } = await this.$http.post("login", this.formdata);
       //2.判断登录是否成功
-      if(status === 200){
+      if (status === 200) {
         //登录成功
         //0.保存token值
-        localStorage.setItem('token',data.token);
+        localStorage.setItem("token", data.token);
         //1.跳转到首页
-        this.$router.push({name:'home'})
+        this.$router.push({ name: "home" });
         //2.提示成功信息
         this.$message.success(msg);
-      }else{
+      } else {
         //登录失败
         //提示失败信息
         this.$message.error(msg);
