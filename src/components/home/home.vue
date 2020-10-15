@@ -21,20 +21,35 @@
       <el-aside width="200px" class="aside">
         <el-menu unique-opened router>
           <!-- 1.用户管理 -->
-          <el-submenu :index="''+item.order" v-for="(item,index) in menus" :key="index">
+          <el-submenu
+            :index="'' + item.order"
+            v-for="(item, index) in menus"
+            :key="index"
+          >
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
-            <el-menu-item :index="item1.path" v-for="(item1,i) in item.children" :key="i">
+            <el-menu-item
+              :index="item1.path"
+              v-for="(item1, i) in item.children"
+              :key="i"
+            >
               <i class="el-icon-menu"></i>
-              <span>{{item1.authName}}</span>
+              <span>{{ item1.authName }}</span>
             </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
       <!-- 内容右边数据 -->
       <el-main class="mian">
+        <!-- 当页面在/home页时显示 -->
+        <el-card class="box-card" v-if="this.$route.path === '/home'">
+          <div class="box-content">
+            <p class="title">欢迎来到Vue电商后台管理系统</p>
+            <p>请在左侧点击您需要操作的页面</p>
+          </div>
+        </el-card>
         <router-view />
       </el-main>
     </el-container>
@@ -106,5 +121,19 @@ export default {
 .mian {
   background-color: #e9eef3;
   height: 100%;
+}
+.box-card {
+  height: 99%;
+}
+.box-content {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  font-size: 30px;
+  font-weight: bold;
 }
 </style>
