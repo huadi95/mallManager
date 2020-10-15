@@ -1,4 +1,4 @@
-# 电商后台管理系统
+# mall
 
 > A Vue.js project
 
